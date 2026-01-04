@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}التقارير{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">التقارير والإحصائيات</h2>
+
+<div class="row">
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">تقرير العمال</h5>
+                <p class="card-text">عرض وتحليل ساعات العمل والرواتب</p>
+                <a href="{{ url_for('reports.workers_report') }}" class="btn btn-primary btn-sm">عرض التقرير</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">تقرير الإنتاج</h5>
+                <p class="card-text">تتبع الإنتاج حسب المنتج والموقع</p>
+                <a href="{{ url_for('reports.production_report') }}" class="btn btn-primary btn-sm">عرض التقرير</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">تقرير المبيعات</h5>
+                <p class="card-text">الإيرادات والمبيعات</p>
+                <a href="{{ url_for('reports.sales_report') }}" class="btn btn-primary btn-sm">عرض التقرير</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">📊 التقرير المحاسبي</h5>
+                <p class="card-text">الإيرادات والمصروفات والنتيجة الصافية</p>
+                <a href="{{ url_for('reports.accounting_report') }}" class="btn btn-success btn-sm">عرض التقرير</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if reports %}
+<h3 class="mt-4">التقارير المسجلة</h3>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>العنوان</th>
+                <th>النوع</th>
+                <th>التاريخ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports %}
+            <tr>
+                <td>{{ report.title }}</td>
+                <td>{{ report.report_type }}</td>
+                <td>{{ report.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

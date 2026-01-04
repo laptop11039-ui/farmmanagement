@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}تعديل بيانات العامل - {{ worker.name }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>تعديل بيانات العامل</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">اسم العامل</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ worker.name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">رقم الهاتف</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" value="{{ worker.phone or '' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="hourly_rate_usd" class="form-label">سعر الساعة (دولار)</label>
+                        <input type="number" class="form-control" id="hourly_rate_usd" name="hourly_rate_usd" step="0.01" value="{{ worker.hourly_rate_usd }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="hourly_rate_lbp" class="form-label">سعر الساعة (ليرة لبنانية)</label>
+                        <input type="number" class="form-control" id="hourly_rate_lbp" name="hourly_rate_lbp" step="0.01" value="{{ worker.hourly_rate_lbp }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="advance" class="form-label">السلفة</label>
+                        <input type="number" class="form-control" id="advance" name="advance" step="0.01" value="{{ worker.advance }}">
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">حفظ التغييرات</button>
+                        <a href="{{ url_for('workers.worker_detail', worker_id=worker.id) }}" class="btn btn-secondary">إلغاء</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

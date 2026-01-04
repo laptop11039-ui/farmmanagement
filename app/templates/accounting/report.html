@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}تقرير المحاسبة{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1>تقرير المحاسبة</h1>
+        </div>
+    </div>
+
+    <!-- Filter Form -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row">
+                <div class="col-md-5">
+                    <label for="start_date" class="form-label">من التاريخ:</label>
+                    <input type="date" name="start_date" id="start_date" class="form-control" value="{{ start_date }}">
+                </div>
+                <div class="col-md-5">
+                    <label for="end_date" class="form-label">إلى التاريخ:</label>
+                    <input type="date" name="end_date" id="end_date" class="form-control" value="{{ end_date }}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="submit" class="btn btn-primary w-100">تصفية</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5>الإيرادات</h5>
+                </div>
+                <div class="card-body">
+                    <h6>بالدولار: $<strong>{{ "%.2f"|format(income_by_category|sum(attribute='amount_usd')) }}</strong></h6>
+                    <h6>بالليرة: <strong>{{ "%.0f"|format(income_by_category|sum(attribute='amount_lbp')) }} ل.ل</strong></h6>
+                    
+                    <h6 class="mt-3">تفصيل الإيرادات:</h6>
+                    <div class="list-group list-group-flush">
+                        {% for category, amounts in income_by_category.items() %}
+                        <div class="list-group-item d-flex justify-content-between">
+                            <span>{{ category }}</span>
+                            <span>${{ "%.2f"|format(amounts['usd']) }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h5>المصروفات</h5>
+                </div>
+                <div class="card-body">
+                    <h6>بالدولار: $<strong>{{ "%.2f"|format(expense_by_category|sum(attribute='amount_usd')) }}</strong></h6>
+                    <h6>بالليرة: <strong>{{ "%.0f"|format(expense_by_category|sum(attribute='amount_lbp')) }} ل.ل</strong></h6>
+                    
+                    <h6 class="mt-3">تفصيل المصروفات:</h6>
+                    <div class="list-group list-group-flush">
+                        {% for category, amounts in expense_by_category.items() %}
+                        <div class="list-group-item d-flex justify-content-between">
+                            <span>{{ category }}</span>
+                            <span>${{ "%.2f"|format(amounts['usd']) }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Transactions -->
+    <div class="card">
+        <div class="card-header">
+            <h5>تفاصيل المعاملات</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>التاريخ</th>
+                        <th>نوع المعاملة</th>
+                        <th>الفئة</th>
+                        <th>الوصف</th>
+                        <th>المبلغ ($)</th>
+                        <th>المبلغ (ل.ل)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td>{{ record.date.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            {% if record.transaction_type == 'إيراد' %}
+                                <span class="badge bg-success">{{ record.transaction_type }}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ record.transaction_type }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ record.category }}</td>
+                        <td>{{ record.description or '-' }}</td>
+                        <td>${{ "%.2f"|format(record.amount_usd) }}</td>
+                        <td>{{ "%.0f"|format(record.amount_lbp) }} ل.ل</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ url_for('accounting.accounting_list') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> العودة
+        </a>
+    </div>
+</div>
+{% endblock %}

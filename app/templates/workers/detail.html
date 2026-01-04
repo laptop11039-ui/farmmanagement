@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}تفاصيل العامل - {{ worker.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ worker.name }}</h5>
+                <p class="card-text">
+                    <strong>الهاتف:</strong> {{ worker.phone or 'غير محدد' }}<br>
+                    <strong>سعر الساعة:</strong> ${{ "%.2f"|format(worker.hourly_rate_usd) }} / {{ "%.0f"|format(worker.hourly_rate_lbp) }} ل.ل<br>
+                    <strong>إجمالي الساعات:</strong> {{ "%.1f"|format(worker.total_hours) }} ساعة<br>
+                    <strong>السلفة:</strong> ${{ "%.2f"|format(worker.advance) }}
+                </p>
+                <hr>
+                <h6>الرصيد</h6>
+                <p class="{% if worker.get_balance_usd() >= 0 %}text-success{% else %}text-danger{% endif %}">
+                    <strong>دولار:</strong> ${{ "%.2f"|format(worker.get_balance_usd()) }}<br>
+                    <strong>ليرة:</strong> {{ "%.0f"|format(worker.get_balance_lbp()) }} ل.ل
+                </p>
+                <div class="d-grid gap-2">
+                    {% if current_user.has_permission('edit_workers') %}
+                    <a href="{{ url_for('workers.edit_worker', worker_id=worker.id) }}" class="btn btn-warning">تعديل البيانات</a>
+                    {% endif %}
+                    {% if current_user.has_permission('add_workers') %}
+                    <a href="{{ url_for('workers.add_shift', worker_id=worker.id) }}" class="btn btn-primary">إضافة نوبة</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>النوبات المسجلة</h5>
+            </div>
+            <div class="card-body">
+                {% if shifts %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>النوع</th>
+                                <th>الموقع</th>
+                                <th>نوع العمل</th>
+                                <th>المنتج</th>
+                                <th>الساعات</th>
+                                <th>التاريخ</th>
+                                <th>ملاحظات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for shift in shifts %}
+                            <tr>
+                                <td>{{ shift.shift_type }}</td>
+                                <td>{{ shift.location }}</td>
+                                <td>{{ shift.work_type or '-' }}</td>
+                                <td>{{ shift.product_type.name if shift.product_type else '-' }}</td>
+                                <td>{{ shift.hours }}</td>
+                                <td>{{ shift.date.strftime('%Y-%m-%d') }}</td>
+                                <td>{{ shift.notes or '-' }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center text-muted">لم يتم تسجيل نوبات لهذا العامل</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="{{ url_for('workers.workers_list') }}" class="btn btn-secondary">العودة</a>
+</div>
+{% endblock %}

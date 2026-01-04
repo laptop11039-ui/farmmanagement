@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}قسم الوقود والمحروقات{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>قسم الوقود والمحروقات</h2>
+    <a href="{{ url_for('fuel.add_fuel') }}" class="btn btn-success">➕ إضافة سجل وقود</a>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h6 class="card-title">الإجمالي (دولار)</h6>
+                <p class="card-text fs-4">${{ "%.2f"|format(total_usd) }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h6 class="card-title">الإجمالي (ليرة)</h6>
+                <p class="card-text fs-4">{{ "%.0f"|format(total_lbp) }} ل.ل</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if fuel_logs %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>نوع الوقود</th>
+                <th>الكمية (لتر)</th>
+                <th>السعر/لتر ($)</th>
+                <th>الإجمالي ($)</th>
+                <th>الإجمالي (ل.ل)</th>
+                <th>التاريخ</th>
+                <th>الملاحظات</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in fuel_logs %}
+            <tr>
+                <td>{{ log.fuel_type }}</td>
+                <td>{{ "%.2f"|format(log.liters) }}</td>
+                <td>${{ "%.2f"|format(log.price_per_liter_usd) }}</td>
+                <td>${{ "%.2f"|format(log.total_usd) }}</td>
+                <td>{{ "%.0f"|format(log.total_lbp) }} ل.ل</td>
+                <td>{{ log.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ log.notes[:50] if log.notes else '-' }}</td>
+                <td>
+                    {% if current_user.is_admin %}
+                    <form method="POST" action="{{ url_for('settings.admin_delete_fuel', fuel_id=log.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('حذف كامل للإدمن - هل أنت متأكد من حذف هذا السجل؟')" title="حذف كامل للإدمن">
+                            <i class="fas fa-trash-alt"></i> حذف كامل
+                        </button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">لم يتم تسجيل أي وقود بعد</div>
+{% endif %}
+{% endblock %}

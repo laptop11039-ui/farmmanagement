@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}إضافة دور جديد{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">➕ إضافة دور جديد</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">اسم الدور *</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="مثل: مدير القسم" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">الوصف</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="وصف الدور ومسؤولياته"></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>🔑 الصلاحيات</h5>
+                        <p class="text-muted small">اختر الصلاحيات التي تريد منح هذا الدور لها</p>
+
+                        {% for category, perms in available_permissions.items() %}
+                        <div class="card mb-3">
+                            <div class="card-header bg-light">
+                                <strong>{{ category }}</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    {% for perm in perms %}
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="{{ perm }}" name="{{ perm }}" value="on">
+                                            <label class="form-check-label" for="{{ perm }}">
+                                                {% if 'view' in perm %}👁️ عرض
+                                                {% elif 'add' in perm %}➕ إضافة
+                                                {% elif 'edit' in perm %}✏️ تعديل
+                                                {% elif 'delete' in perm %}🗑️ حذف
+                                                {% endif %}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="alert alert-info">
+                        <strong>💡 نصيحة:</strong>
+                        <ul class="mb-0 mt-2 small">
+                            <li>اختر "عرض" لإعطاء صلاحية العرض فقط</li>
+                            <li>اختر "إضافة" لإعطاء صلاحية إضافة عناصر جديدة</li>
+                            <li>اختر "تعديل" لإعطاء صلاحية تعديل العناصر الموجودة</li>
+                            <li>اختر "حذف" لإعطاء صلاحية حذف العناصر</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">✅ إنشاء الدور</button>
+                        <a href="{{ url_for('settings.roles_management') }}" class="btn btn-secondary">← إلغاء</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

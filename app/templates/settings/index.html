@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}الإعدادات{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">⚙️ إعدادات الموقع</h2>
+
+<!-- إدارة المستخدمين والصلاحيات -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card border-primary">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">👥 إدارة المستخدمين</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">إضافة وتعديل وحذف المستخدمين</p>
+                <a href="{{ url_for('settings.users_management') }}" class="btn btn-primary">🔐 إدارة المستخدمين</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card border-info">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">🔑 الأدوار والصلاحيات</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">إنشاء وتعديل الأدوار وتعيين الصلاحيات</p>
+                <a href="{{ url_for('settings.roles_management') }}" class="btn btn-info">🔐 إدارة الأدوار</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="card">
+    <div class="card-header">
+        <h5>إدارة أصناف المنتجات</h5>
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <h6>إضافة صنف منتج جديد</h6>
+            <form id="addProductForm" method="POST" action="{{ url_for('settings.add_product_type') }}">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="name" placeholder="اسم المنتج" required>
+                    <select class="form-select" name="category" required>
+                        <option value="">اختر التصنيف</option>
+                        <option value="دراق">دراق</option>
+                        <option value="تفاح">تفاح</option>
+                        <option value="خضروات">خضروات</option>
+                        <option value="فواكه">فواكه</option>
+                        <option value="أخرى">أخرى</option>
+                    </select>
+                    <button type="submit" class="btn btn-success">إضافة</button>
+                </div>
+            </form>
+        </div>
+
+        <hr>
+
+        <h6>الأصناف الموجودة</h6>
+        {% if product_types %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>اسم المنتج</th>
+                    <th>التصنيف</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in product_types %}
+                <tr id="product-{{ product.id }}">
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="deleteProductConfirm(this, '{{ product.id }}')">حذف</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">لم يتم إضافة أي أصناف بعد</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function deleteProductConfirm(button, productId) {
+    if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+        fetch(`{{ url_for('settings.delete_product_type', product_type_id=0) }}`.replace('0', productId), {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const row = button.closest('tr');
+                row.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => row.remove(), 300);
+                alert('تم حذف المنتج بنجاح');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+}
+</script>
+{% endblock %}

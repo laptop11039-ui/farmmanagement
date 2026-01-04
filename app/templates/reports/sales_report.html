@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}تقرير المبيعات{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>تقرير المبيعات</h2>
+    <button class="btn btn-primary" onclick="window.print()">🖨️ طباعة</button>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h6>إجمالي المبيعات (دولار)</h6>
+                <p class="fs-4">${{ "%.2f"|format(total_usd) }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h6>إجمالي المبيعات (ليرة)</h6>
+                <p class="fs-4">{{ "%.0f"|format(total_lbp) }} ل.ل</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if sales %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>المنتج</th>
+                <th>الكمية</th>
+                <th>الوحدة</th>
+                <th>السعر ($)</th>
+                <th>الإجمالي ($)</th>
+                <th>الإجمالي (ل.ل)</th>
+                <th>التاريخ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+            <tr>
+                <td>{{ sale.product_type.name }}</td>
+                <td>{{ "%.2f"|format(sale.quantity) }}</td>
+                <td>{{ sale.unit }}</td>
+                <td>${{ "%.2f"|format(sale.price_per_unit_usd) }}</td>
+                <td>${{ "%.2f"|format(sale.total_usd) }}</td>
+                <td>{{ "%.0f"|format(sale.total_lbp) }} ل.ل</td>
+                <td>{{ sale.date.strftime('%Y-%m-%d') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">لا توجد بيانات مبيعات</div>
+{% endif %}
+{% endblock %}

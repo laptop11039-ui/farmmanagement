@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}إدارة المستخدمين{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>👥 إدارة المستخدمين</h2>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{{ url_for('settings.add_user') }}" class="btn btn-success">➕ إضافة مستخدم جديد</a>
+    </div>
+</div>
+
+{% if users %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>اسم المستخدم</th>
+                <th>البريد الإلكتروني</th>
+                <th>الدور</th>
+                <th>الحالة</th>
+                <th>الإدمين</th>
+                <th>تاريخ الإنشاء</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>
+                    <strong>{{ user.username }}</strong>
+                </td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if user.role %}
+                        <span class="badge bg-info">{{ user.role.name }}</span>
+                    {% elif user.is_admin %}
+                        <span class="badge bg-danger">مسؤول النظام</span>
+                    {% else %}
+                        <span class="badge bg-secondary">بدون دور</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.is_active %}
+                        <span class="badge bg-success">✓ نشط</span>
+                    {% else %}
+                        <span class="badge bg-danger">✗ معطل</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.is_admin %}
+                        <span class="badge bg-danger">✓ أدمين</span>
+                    {% else %}
+                        <span class="badge bg-light text-dark">-</span>
+                    {% endif %}
+                </td>
+                <td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    <a href="{{ url_for('settings.edit_user', user_id=user.id) }}" class="btn btn-primary btn-sm">✏️ تعديل</a>
+                    {% if user.id != current_user.id %}
+                    <form method="POST" action="{{ url_for('settings.delete_user', user_id=user.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد من حذف هذا المستخدم؟')">🗑️ حذف</button>
+                    </form>
+                    {% else %}
+                    <button class="btn btn-secondary btn-sm" disabled>حسابك</button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">
+    لا توجد مستخدمين حتى الآن
+</div>
+{% endif %}
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <a href="{{ url_for('settings.roles_management') }}" class="btn btn-info">🔐 إدارة الأدوار والصلاحيات</a>
+        <a href="{{ url_for('settings.settings') }}" class="btn btn-secondary">← العودة</a>
+    </div>
+</div>
+{% endblock %}

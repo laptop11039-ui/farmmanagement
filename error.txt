@@ -1,0 +1,185 @@
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.16.86:5001
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 995-855-227
+127.0.0.1 - - [03/Jan/2026 15:59:24] "GET /production/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 15:59:24] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:24] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:25] "GET /attendance/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 15:59:25] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:25] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:26] "GET /workers/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 15:59:26] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:26] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:27] "GET /attendance/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 15:59:27] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:27] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:27] "GET /production/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 15:59:27] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:27] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:44] "GET /sales/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 15:59:44] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:44] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:46] "GET /fuel/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 15:59:46] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:46] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:48] "GET /fuel/add HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 15:59:48] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 15:59:48] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:14] "POST /fuel/add HTTP/1.1" 302 -
+127.0.0.1 - - [03/Jan/2026 16:00:14] "GET /fuel/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:00:14] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:14] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:33] "GET /sales/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:00:33] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:33] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:34] "GET /production/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:00:34] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:34] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:34] "GET /attendance/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:00:34] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:34] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:35] "GET /workers/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:00:35] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:35] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:36] "GET /workers/add HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:00:36] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:36] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:39] "GET /accounting/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:00:39] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:39] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:40] "GET /accounting/add HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:00:40] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:40] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:57] "POST /accounting/add HTTP/1.1" 500 -
+Traceback (most recent call last):
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1815, in _execute_context
+    context = constructor(
+    
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 1496, in _init_compiled
+    flattened_processors[key](compiled_params[key])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\dialects\sqlite\base.py", line 1287, in process
+    raise TypeError(
+    ^
+TypeError: SQLite Date type only accepts Python date objects as input.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\flask\app.py", line 2213, in __call__
+    return self.wsgi_app(environ, start_response)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\flask\app.py", line 2193, in wsgi_app
+    response = self.handle_exception(e)
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\flask_login\utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\m.kalo\Downloads\2\worker_management\app\routes.py", line 583, in add_accounting
+    db.session.commit()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\scoping.py", line 597, in commit
+    return self._proxied.commit()
+           ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+    
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+    
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+    
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+    
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1821, in _execute_context
+    self._handle_dbapi_exception(
+    ^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 1815, in _execute_context
+    context = constructor(
+    
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 1496, in _init_compiled
+    flattened_processors[key](compiled_params[key])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\m.kalo\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\dialects\sqlite\base.py", line 1287, in process
+    raise TypeError(
+    ^
+sqlalchemy.exc.StatementError: (builtins.TypeError) SQLite Date type only accepts Python date objects as input.
+[SQL: INSERT INTO accounting (worker_id, production_id, sales_id, fuel_id, medicine_id, fertilizer_id, consumption_id, transaction_type, category, amount_usd, amount_lbp, description, date, notes, created_at, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: [{'description': '', 'amount_usd': 5.0, 'transaction_type': '\u0645\u0635\u0631\u0648\u0641', 'notes': '', 'date': '2026-01-03', 'created_by': 2, 'category': '\u0631\u0648\u0627\u062a\u0628', 'worker_id': 1, 'amount_lbp': 0, 'sales_id': None, 'fuel_id': None, 'consumption_id': None, 'fertilizer_id': None, 'production_id': None, 'medicine_id': None}]]
+127.0.0.1 - - [03/Jan/2026 16:00:57] "GET /accounting/add?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:57] "GET /accounting/add?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:57] "GET /accounting/add?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:00:57] "GET /accounting/add?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 304 -
+ * Detected change in 'C:\\Users\\m.kalo\\Downloads\\2\\worker_management\\app\\routes.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 995-855-227
+127.0.0.1 - - [03/Jan/2026 16:01:58] "GET /workers/ HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:01:58] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:01:58] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:02:00] "GET /workers/1 HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:02:00] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:02:00] "GET /static/js/main.js HTTP/1.1" 304 -
+ * Detected change in 'C:\\Users\\m.kalo\\Downloads\\2\\worker_management\\app\\routes.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 995-855-227
+127.0.0.1 - - [03/Jan/2026 16:02:11] "GET /workers/1/add_shift HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:02:11] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:02:11] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:02:24] "POST /workers/1/add_shift HTTP/1.1" 302 -
+127.0.0.1 - - [03/Jan/2026 16:02:24] "GET /workers/1 HTTP/1.1" 200 -
+127.0.0.1 - - [03/Jan/2026 16:02:24] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [03/Jan/2026 16:02:24] "GET /static/js/main.js HTTP/1.1" 304 -

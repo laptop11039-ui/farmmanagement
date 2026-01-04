@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}قائمة العمال{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>قائمة العمال</h2>
+    {% if current_user.has_permission('add_workers') %}
+    <a href="{{ url_for('workers.add_worker') }}" class="btn btn-success">➕ إضافة عامل جديد</a>
+    {% endif %}
+</div>
+
+{% if workers %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>الاسم</th>
+                <th>رقم الهاتف</th>
+                <th>سعر الساعة (دولار)</th>
+                <th>سعر الساعة (ليرة)</th>
+                <th>إجمالي الساعات</th>
+                <th>السلفة</th>
+                <th>الرصيد (دولار)</th>
+                <th>الرصيد (ليرة)</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for worker in workers %}
+            <tr>
+                <td>{{ worker.name }}</td>
+                <td>{{ worker.phone or 'غير محدد' }}</td>
+                <td>${{ "%.2f"|format(worker.hourly_rate_usd) }}</td>
+                <td>{{ "%.0f"|format(worker.hourly_rate_lbp) }} ل.ل</td>
+                <td>{{ "%.1f"|format(worker.total_hours) }}</td>
+                <td>${{ "%.2f"|format(worker.advance) }}</td>
+                <td class="{% if worker.get_balance_usd() >= 0 %}text-success{% else %}text-danger{% endif %}">
+                    ${{ "%.2f"|format(worker.get_balance_usd()) }}
+                </td>
+                <td class="{% if worker.get_balance_lbp() >= 0 %}text-success{% else %}text-danger{% endif %}">
+                    {{ "%.0f"|format(worker.get_balance_lbp()) }} ل.ل
+                </td>
+                <td>
+                    <a href="{{ url_for('workers.worker_detail', worker_id=worker.id) }}" class="btn btn-sm btn-info">عرض</a>
+                    {% if current_user.has_permission('edit_workers') %}
+                    <a href="{{ url_for('workers.edit_worker', worker_id=worker.id) }}" class="btn btn-sm btn-warning">تعديل</a>
+                    {% endif %}
+                    {% if current_user.is_admin %}
+                    <form method="POST" action="{{ url_for('settings.admin_delete_worker', worker_id=worker.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من حذف هذا العامل وجميع سجلاته؟ هذا الإجراء لا يمكن التراجع عنه!')" title="حذف كامل للإدمن">
+                            <i class="fas fa-trash-alt"></i> حذف كامل
+                        </button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">لم يتم تسجيل أي عمال بعد</div>
+{% endif %}
+{% endblock %}

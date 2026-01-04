@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}تقرير الإنتاج{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>تقرير الإنتاج</h2>
+    <button class="btn btn-primary" onclick="window.print()">🖨️ طباعة</button>
+</div>
+
+{% if grouped_data %}
+<!-- ملخص المجاميع حسب المنتج -->
+<div class="card mb-4">
+    <div class="card-header bg-info text-white">
+        <h5 class="mb-0">📊 ملخص الإنتاج حسب المنتج</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>المنتج</th>
+                    <th>إجمالي الكمية</th>
+                    <th>الوحدة</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product_name, total_qty in total_by_product.items()|sort %}
+                <tr class="fw-bold bg-light">
+                    <td>{{ product_name }}</td>
+                    <td>{{ "%.2f"|format(total_qty) }}</td>
+                    <td>كجم</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- التفاصيل المجمعة حسب المنتج والموقع -->
+<div class="card mb-4">
+    <div class="card-header bg-success text-white">
+        <h5 class="mb-0">📈 تفاصيل الإنتاج حسب المنتج والموقع</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>المنتج</th>
+                        <th>التصنيف</th>
+                        <th>الموقع</th>
+                        <th>إجمالي الكمية</th>
+                        <th>الوحدة</th>
+                        <th>عدد السجلات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in grouped_data %}
+                    <tr>
+                        <td><strong>{{ item.product_name }}</strong></td>
+                        <td>{{ item.category }}</td>
+                        <td>{{ item.location }}</td>
+                        <td><strong>{{ "%.2f"|format(item.quantity) }}</strong></td>
+                        <td>{{ item.unit }}</td>
+                        <td><span class="badge bg-primary">{{ item.records|length }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- جميع السجلات التفصيلية -->
+<div class="card">
+    <div class="card-header bg-warning text-dark">
+        <h5 class="mb-0">📋 جميع سجلات الإنتاج</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="table-light">
+                    <tr>
+                        <th>المنتج</th>
+                        <th>التصنيف</th>
+                        <th>الموقع</th>
+                        <th>الكمية</th>
+                        <th>الوحدة</th>
+                        <th>التاريخ</th>
+                        <th>ملاحظات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for production in productions %}
+                    <tr>
+                        <td>{{ production.product_type.name }}</td>
+                        <td>{{ production.product_type.category or '-' }}</td>
+                        <td>{{ production.location or '-' }}</td>
+                        <td>{{ "%.2f"|format(production.quantity) }}</td>
+                        <td>{{ production.unit }}</td>
+                        <td>{{ production.date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ production.notes or '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info">لا توجد بيانات إنتاج</div>
+{% endif %}
+{% endblock %}

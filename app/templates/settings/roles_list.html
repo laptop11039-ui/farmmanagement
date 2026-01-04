@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}إدارة الأدوار والصلاحيات{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>🔐 إدارة الأدوار والصلاحيات</h2>
+        <p class="text-muted">إدارة الأدوار المختلفة والصلاحيات المرتبطة بها</p>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{{ url_for('settings.add_role') }}" class="btn btn-success">➕ إضافة دور جديد</a>
+    </div>
+</div>
+
+{% if roles %}
+<div class="row">
+    {% for role in roles %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">🏷️ {{ role.name }}</h5>
+            </div>
+            <div class="card-body">
+                {% if role.description %}
+                <p class="text-muted">{{ role.description }}</p>
+                {% endif %}
+
+                <div class="mb-3">
+                    <h6>الصلاحيات:</h6>
+                    {% if role.permissions %}
+                        <ul class="list-unstyled">
+                            {% for perm in role.permissions.split(',') %}
+                            <li>
+                                <span class="badge bg-light text-dark">
+                                    {% if 'view' in perm %}👁️ {% elif 'add' in perm %}➕ {% elif 'edit' in perm %}✏️ {% elif 'delete' in perm %}🗑️ {% endif %}
+                                    {{ perm.replace('_', ' ') }}
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                    <p class="text-muted"><em>بدون صلاحيات</em></p>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <small class="text-muted">
+                        عدد المستخدمين: <strong>{{ role.users|length }}</strong>
+                    </small>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('settings.edit_role', role_id=role.id) }}" class="btn btn-primary btn-sm">✏️ تعديل</a>
+                    {% if role.users|length == 0 %}
+                    <form method="POST" action="{{ url_for('settings.delete_role', role_id=role.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm w-100" onclick="return confirm('هل أنت متأكد من حذف هذا الدور؟')">🗑️ حذف</button>
+                    </form>
+                    {% else %}
+                    <button class="btn btn-secondary btn-sm" disabled>🗑️ لا يمكن الحذف (به مستخدمين)</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    لا توجد أدوار محددة حتى الآن
+</div>
+{% endif %}
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h6 class="card-title">📖 معلومات الصلاحيات:</h6>
+                <ul class="mb-0 small">
+                    <li><strong>👁️ View:</strong> عرض البيانات فقط</li>
+                    <li><strong>➕ Add:</strong> إضافة بيانات جديدة</li>
+                    <li><strong>✏️ Edit:</strong> تعديل البيانات الموجودة</li>
+                    <li><strong>🗑️ Delete:</strong> حذف البيانات</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <a href="{{ url_for('settings.users_management') }}" class="btn btn-info">👥 إدارة المستخدمين</a>
+        <a href="{{ url_for('settings.settings') }}" class="btn btn-secondary">← العودة</a>
+    </div>
+</div>
+{% endblock %}

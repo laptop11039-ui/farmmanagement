@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}تعديل مستخدم{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">✏️ تعديل بيانات {{ user.username }}</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">اسم المستخدم *</label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">البريد الإلكتروني *</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">كلمة المرور الجديدة (اختياري)</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                        <small class="text-muted">اتركها فارغة إذا كنت لا تريد تغييرها</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="role_id" class="form-label">الدور</label>
+                        <select class="form-control" id="role_id" name="role_id">
+                            <option value="">-- بدون دور --</option>
+                            {% for role in roles %}
+                            <option value="{{ role.id }}" {% if user.role_id == role.id %}selected{% endif %}>{{ role.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="is_active" name="is_active" {% if user.is_active %}checked{% endif %}>
+                            <label class="form-check-label" for="is_active">
+                                نشط (يمكن تسجيل الدخول)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin" {% if user.is_admin %}checked{% endif %}>
+                            <label class="form-check-label" for="is_admin">
+                                <strong>مسؤول النظام</strong>
+                            </label>
+                            <small class="text-danger d-block mt-2">⚠️ تحذير: مسؤول النظام لديه جميع الصلاحيات</small>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <strong>📌 معلومات المستخدم:</strong>
+                        <ul class="mb-0 mt-2 small">
+                            <li>تاريخ الإنشاء: {{ user.created_at.strftime('%Y-%m-%d %H:%M') }}</li>
+                            <li>أنشأه: {% if user.created_by %}
+                                {% set creator = user.created_by_user[0] if user.created_by_user else none %}
+                                {% if creator %}{{ creator.username }}{% else %}نظام{% endif %}
+                            {% else %}نظام{% endif %}</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">✅ حفظ التغييرات</button>
+                        <a href="{{ url_for('settings.users_management') }}" class="btn btn-secondary">← إلغاء</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

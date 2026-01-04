@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}قسم الأدوية والأسمدة{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>قسم الأدوية والأسمدة</h2>
+    <a href="{{ url_for('medicines.add_medicine') }}" class="btn btn-success">➕ إضافة دواء/سماد</a>
+</div>
+
+{% if medicines %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>الاسم</th>
+                <th>الكمية</th>
+                <th>الوحدة</th>
+                <th>السعر ($)</th>
+                <th>السعر (ل.ل)</th>
+                <th>القيمة الإجمالية ($)</th>
+                <th>القيمة الإجمالية (ل.ل)</th>
+                <th>المتبقي</th>
+                <th>التاريخ</th>
+                <th>الملاحظات</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for medicine in medicines %}
+            <tr>
+                <td>{{ medicine.name }}</td>
+                <td>{{ "%.2f"|format(medicine.quantity) }}</td>
+                <td>{{ medicine.unit }}</td>
+                <td>${{ "%.2f"|format(medicine.price_usd) }}</td>
+                <td>{{ "%.0f"|format(medicine.price_lbp) }} ل.ل</td>
+                <td><strong>${{ "%.2f"|format(medicine.get_total_value_usd()) }}</strong></td>
+                <td><strong>{{ "%.0f"|format(medicine.get_total_value_lbp()) }} ل.ل</strong></td>
+                <td>
+                    {% set remaining = medicine.get_remaining_quantity() %}
+                    {% if remaining > 0 %}
+                        <span class="badge bg-success">{{ "%.2f"|format(remaining) }}</span>
+                    {% elif remaining == 0 %}
+                        <span class="badge bg-warning">نفذ</span>
+                    {% else %}
+                        <span class="badge bg-danger">ناقص</span>
+                    {% endif %}
+                </td>
+                <td>{{ medicine.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ medicine.notes[:30] if medicine.notes else '-' }}</td>
+                <td>
+                    {% if current_user.is_admin %}
+                    <form method="POST" action="{{ url_for('settings.admin_delete_medicine', medicine_id=medicine.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('حذف كامل للإدمن - هل أنت متأكد من حذف هذا السجل؟')" title="حذف كامل للإدمن">
+                            <i class="fas fa-trash-alt"></i> حذف كامل
+                        </button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">لم يتم تسجيل أي أدوية أو أسمدة بعد</div>
+{% endif %}
+{% endblock %}

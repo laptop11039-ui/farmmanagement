@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}قسم الإنتاج{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>قسم الإنتاج</h2>
+    <a href="{{ url_for('production.add_production') }}" class="btn btn-success">➕ إضافة إنتاج جديد</a>
+</div>
+
+{% if productions %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>المنتج</th>
+                <th>التصنيف</th>
+                <th>الموقع</th>
+                <th>الكمية</th>
+                <th>الوحدة</th>
+                <th>التاريخ</th>
+                <th>الملاحظات</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for production in productions %}
+            <tr>
+                <td>{{ production.product_type.name }}</td>
+                <td>{{ production.product_type.category or '-' }}</td>
+                <td>{{ production.location or '-' }}</td>
+                <td>{{ "%.2f"|format(production.quantity) }}</td>
+                <td>{{ production.unit }}</td>
+                <td>{{ production.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ production.notes[:50] if production.notes else '-' }}</td>
+                <td>
+                    <button class="btn btn-sm btn-info" onclick="editProduction(this)">تعديل</button>
+                    {% if current_user.is_admin %}
+                    <form method="POST" action="{{ url_for('settings.admin_delete_production', production_id=production.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('حذف كامل للإدمن - هل أنت متأكد من حذف هذا السجل؟')" title="حذف كامل للإدمن">
+                            <i class="fas fa-trash-alt"></i> حذف كامل
+                        </button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">لم يتم تسجيل أي إنتاج بعد</div>
+{% endif %}
+{% endblock %}

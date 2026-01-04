@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}إضافة نوبة عمل - {{ worker.name }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>إضافة نوبة عمل - {{ worker.name }}</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="shift_type" class="form-label">نوع النوبة *</label>
+                        <select class="form-control" id="shift_type" name="shift_type" required>
+                            <option value="">اختر نوع النوبة</option>
+                            <option value="صباحي">صباحي</option>
+                            <option value="بعد ظهر">بعد الظهر</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">الموقع *</label>
+                        <select class="form-control" id="location" name="location" required>
+                            <option value="">اختر الموقع</option>
+                            <option value="جبل">جبل</option>
+                            <option value="سهل">سهل</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="product_type_id" class="form-label">نوع المنتج</label>
+                        <select class="form-control" id="product_type_id" name="product_type_id">
+                            <option value="">اختر المنتج (اختياري)</option>
+                            {% for product in product_types %}
+                            <option value="{{ product.id }}">{{ product.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="work_type" class="form-label">نوع العمل</label>
+                        <select class="form-control" id="work_type" name="work_type">
+                            <option value="">اختر نوع العمل</option>
+                            <option value="تنظيف">تنظيف</option>
+                            <option value="تقليم">تقليم</option>
+                            <option value="تشحيل">تشحيل</option>
+                            <option value="جني">جني</option>
+                            <option value="أخرى">أخرى</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hours" class="form-label">عدد الساعات *</label>
+                        <input type="number" class="form-control" id="hours" name="hours" step="0.5" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">التاريخ *</label>
+                        <input type="date" class="form-control" id="date" name="date" value="{{ now.strftime('%Y-%m-%d') }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">ملاحظات</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">إضافة النوبة</button>
+                        <a href="{{ url_for('workers.worker_detail', worker_id=worker.id) }}" class="btn btn-secondary">إلغاء</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

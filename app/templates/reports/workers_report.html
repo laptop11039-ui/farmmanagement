@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}تقرير العمال{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>تقرير العمال</h2>
+    <button class="btn btn-primary" onclick="window.print()">🖨️ طباعة</button>
+</div>
+
+{% if workers %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>العامل</th>
+                <th>ساعات العمل</th>
+                <th>سعر الساعة ($)</th>
+                <th>الإجمالي ($)</th>
+                <th>الإجمالي (ل.ل)</th>
+                <th>السلفة</th>
+                <th>الرصيد ($)</th>
+                <th>الرصيد (ل.ل)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for worker in workers %}
+            <tr>
+                <td>{{ worker.name }}</td>
+                <td>{{ "%.1f"|format(worker.total_hours) }}</td>
+                <td>${{ "%.2f"|format(worker.hourly_rate_usd) }}</td>
+                <td>${{ "%.2f"|format(worker.get_total_earnings_usd()) }}</td>
+                <td>{{ "%.0f"|format(worker.get_total_earnings_lbp()) }} ل.ل</td>
+                <td>${{ "%.2f"|format(worker.advance) }}</td>
+                <td class="{% if worker.get_balance_usd() >= 0 %}text-success fw-bold{% else %}text-danger fw-bold{% endif %}">
+                    ${{ "%.2f"|format(worker.get_balance_usd()) }}
+                </td>
+                <td class="{% if worker.get_balance_lbp() >= 0 %}text-success fw-bold{% else %}text-danger fw-bold{% endif %}">
+                    {{ "%.0f"|format(worker.get_balance_lbp()) }} ل.ل
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">لا توجد بيانات عمال</div>
+{% endif %}
+{% endblock %}

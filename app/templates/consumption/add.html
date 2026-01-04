@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}إضافة استهلاك{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>إضافة سجل استهلاك جديد</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="consumption_type" class="form-label">نوع الاستهلاك *</label>
+                        <select class="form-control" id="consumption_type" name="consumption_type" required onchange="updateOptions()">
+                            <option value="">-- اختر نوع الاستهلاك --</option>
+                            <option value="وقود">وقود</option>
+                            <option value="دواء">أدوية ومبيدات</option>
+                            <option value="سماد">أسمدة</option>
+                        </select>
+                    </div>
+
+                    <!-- Fuel Selection -->
+                    <div class="mb-3" id="fuel_section" style="display:none;">
+                        <label for="fuel_id" class="form-label">اختر نوع الوقود</label>
+                        <select class="form-control" id="fuel_id" name="fuel_id">
+                            <option value="">-- اختر --</option>
+                            {% for fuel in fuels %}
+                            <option value="{{ fuel.id }}">{{ fuel.fuel_type }} ({{ fuel.liters }} لتر)</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Medicine Selection -->
+                    <div class="mb-3" id="medicine_section" style="display:none;">
+                        <label for="medicine_id" class="form-label">اختر الدواء</label>
+                        <select class="form-control" id="medicine_id" name="medicine_id">
+                            <option value="">-- اختر --</option>
+                            {% for medicine in medicines %}
+                            <option value="{{ medicine.id }}">{{ medicine.name }} ({{ medicine.quantity }} {{ medicine.unit }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Fertilizer Selection -->
+                    <div class="mb-3" id="fertilizer_section" style="display:none;">
+                        <label for="fertilizer_id" class="form-label">اختر السماد</label>
+                        <select class="form-control" id="fertilizer_id" name="fertilizer_id">
+                            <option value="">-- اختر --</option>
+                            {% for fertilizer in fertilizers %}
+                            <option value="{{ fertilizer.id }}">{{ fertilizer.name }} ({{ fertilizer.quantity }} {{ fertilizer.unit }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="quantity_consumed" class="form-label">الكمية المستهلكة *</label>
+                        <input type="number" class="form-control" id="quantity_consumed" name="quantity_consumed" step="0.01" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="unit" class="form-label">الوحدة</label>
+                        <input type="text" class="form-control" id="unit" name="unit" placeholder="لتر، كجم، إلخ">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="date" class="form-label">التاريخ</label>
+                        <input type="date" class="form-control" id="date" name="date" value="{{ now.strftime('%Y-%m-%d') }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">ملاحظات</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">إضافة الاستهلاك</button>
+                        <a href="{{ url_for('consumption.consumption_list') }}" class="btn btn-secondary">إلغاء</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function updateOptions() {
+    const consumptionType = document.getElementById('consumption_type').value;
+    document.getElementById('fuel_section').style.display = consumptionType === 'وقود' ? 'block' : 'none';
+    document.getElementById('medicine_section').style.display = consumptionType === 'دواء' ? 'block' : 'none';
+    document.getElementById('fertilizer_section').style.display = consumptionType === 'سماد' ? 'block' : 'none';
+}
+</script>
+{% endblock %}

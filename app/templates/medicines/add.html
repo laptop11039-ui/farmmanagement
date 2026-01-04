@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}إضافة دواء/سماد{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>إضافة دواء أو سماد جديد</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">الاسم *</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">الكمية *</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" step="0.01" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="unit" class="form-label">الوحدة</label>
+                        <input type="text" class="form-control" id="unit" name="unit" value="لتر">
+                    </div>
+                    <div class="mb-3">
+                        <label for="price_usd" class="form-label">السعر (دولار)</label>
+                        <input type="number" class="form-control" id="price_usd" name="price_usd" step="0.01">
+                    </div>
+                    <div class="mb-3">
+                        <label for="price_lbp" class="form-label">السعر (ليرة)</label>
+                        <input type="number" class="form-control" id="price_lbp" name="price_lbp" step="0.01">
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">التاريخ</label>
+                        <input type="date" class="form-control" id="date" name="date" value="{{ now.strftime('%Y-%m-%d') }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">ملاحظات</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">إضافة</button>
+                        <a href="{{ url_for('medicines.medicines_list') }}" class="btn btn-secondary">إلغاء</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

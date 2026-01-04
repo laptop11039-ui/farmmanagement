@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}قسم المبيعات{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>قسم المبيعات</h2>
+    <a href="{{ url_for('sales.add_sale') }}" class="btn btn-success">➕ إضافة عملية بيع</a>
+</div>
+
+{% if sales %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>المنتج</th>
+                <th>الكمية</th>
+                <th>السعر / وحدة ($)</th>
+                <th>الإجمالي ($)</th>
+                <th>الإجمالي (ل.ل)</th>
+                <th>التاريخ</th>
+                <th>الملاحظات</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+            <tr>
+                <td>{{ sale.product_type.name }}</td>
+                <td>{{ "%.2f"|format(sale.quantity) }} {{ sale.unit }}</td>
+                <td>${{ "%.2f"|format(sale.price_per_unit_usd) }}</td>
+                <td>${{ "%.2f"|format(sale.total_usd) }}</td>
+                <td>{{ "%.0f"|format(sale.total_lbp) }} ل.ل</td>
+                <td>{{ sale.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ sale.notes[:50] if sale.notes else '-' }}</td>
+                <td>
+                    {% if current_user.is_admin %}
+                    <form method="POST" action="{{ url_for('settings.admin_delete_sale', sale_id=sale.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('حذف كامل للإدمن - هل أنت متأكد من حذف هذا السجل؟')" title="حذف كامل للإدمن">
+                            <i class="fas fa-trash-alt"></i> حذف كامل
+                        </button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">لم يتم تسجيل أي مبيعات بعد</div>
+{% endif %}
+{% endblock %}

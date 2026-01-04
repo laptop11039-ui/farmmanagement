@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}قسم الاستهلاك{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>قسم الاستهلاك (الوقود والأدوية والأسمدة)</h2>
+    <a href="{{ url_for('consumption.add_consumption') }}" class="btn btn-success">➕ إضافة استهلاك</a>
+</div>
+
+{% if consumptions %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>نوع الاستهلاك</th>
+                <th>الاسم</th>
+                <th>الكمية المستهلكة</th>
+                <th>المتبقي في المخزون</th>
+                <th>التاريخ</th>
+                <th>الملاحظات</th>
+                <th>الإجراءات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consumption in consumptions %}
+            <tr>
+                <td>
+                    {% if consumption.consumption_type == 'وقود' %}
+                        <span class="badge bg-info">{{ consumption.consumption_type }}</span>
+                    {% elif consumption.consumption_type == 'دواء' %}
+                        <span class="badge bg-success">{{ consumption.consumption_type }}</span>
+                    {% else %}
+                        <span class="badge bg-warning">{{ consumption.consumption_type }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if consumption.fuel %}
+                        {{ consumption.fuel.fuel_type }}
+                    {% elif consumption.medicine %}
+                        {{ consumption.medicine.name }}
+                    {% elif consumption.fertilizer %}
+                        {{ consumption.fertilizer.name }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>{{ "%.2f"|format(consumption.quantity_consumed) }} {{ consumption.unit }}</td>
+                <td>
+                    {% if consumption.fuel %}
+                        {% set remaining = consumption.fuel.get_remaining_quantity() %}
+                    {% elif consumption.medicine %}
+                        {% set remaining = consumption.medicine.get_remaining_quantity() %}
+                    {% elif consumption.fertilizer %}
+                        {% set remaining = consumption.fertilizer.get_remaining_quantity() %}
+                    {% else %}
+                        {% set remaining = 0 %}
+                    {% endif %}
+                    
+                    {% if remaining > 0 %}
+                        <span class="badge bg-success">{{ "%.2f"|format(remaining) }} {{ consumption.unit }}</span>
+                    {% elif remaining == 0 %}
+                        <span class="badge bg-warning">✓ نفذ</span>
+                    {% else %}
+                        <span class="badge bg-danger">⚠️ ناقص</span>
+                    {% endif %}
+                </td>
+                <td>{{ consumption.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ consumption.notes[:50] if consumption.notes else '-' }}</td>
+                <td>
+                    {% if current_user.is_admin %}
+                    <form method="POST" action="{{ url_for('settings.admin_delete_consumption', consumption_id=consumption.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('حذف كامل للإدمن - هل أنت متأكد من حذف هذا السجل؟')" title="حذف كامل للإدمن">
+                            <i class="fas fa-trash-alt"></i> حذف كامل
+                        </button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">لم يتم تسجيل أي استهلاك بعد</div>
+{% endif %}
+{% endblock %}

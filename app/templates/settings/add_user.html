@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}إضافة مستخدم جديد{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">➕ إضافة مستخدم جديد</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">اسم المستخدم *</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                        <small class="text-muted">يجب أن يكون فريداً</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">البريد الإلكتروني *</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                        <small class="text-muted">يجب أن يكون فريداً</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">كلمة المرور *</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <small class="text-muted">كلمة سر قوية على الأقل 6 أحرف</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="role_id" class="form-label">الدور</label>
+                        <select class="form-control" id="role_id" name="role_id">
+                            <option value="">-- بدون دور --</option>
+                            {% for role in roles %}
+                            <option value="{{ role.id }}">{{ role.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <small class="text-muted">اختياري - يمكن تعيين دور لاحقاً</small>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <strong>📌 ملاحظة:</strong>
+                        <ul class="mb-0 mt-2">
+                            <li>المستخدم الجديد سيكون نشطاً افتراضياً</li>
+                            <li>يمكن تعديل البيانات في أي وقت</li>
+                            <li>الدور يحدد الصلاحيات المتاحة</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">✅ إنشاء المستخدم</button>
+                        <a href="{{ url_for('settings.users_management') }}" class="btn btn-secondary">← إلغاء</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
